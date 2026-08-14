@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import { connectDB } from './config/db.js';
 import router from "./routes/categoryRoutes.js"
+import productrouter from "./routes/productRoutes.js"
 dotenv.config();
 
 const app = express();
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/uploads', express.static('uploads'));
 
 app.use("/api/categories", router)
+app.use("/api/products",productrouter)
 
 
 const PORT = process.env.PORT || 5000;
