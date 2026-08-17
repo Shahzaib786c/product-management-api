@@ -3,24 +3,18 @@ import Category from "../models/Category.js"
 
 export async function createProduct(req, res) {
     try {
-
-        // ===== MULTER / IMAGE UPLOAD REQUIREMENT START =====
-        // Assignment Requirement:
-        // Product image is required.
-        // Multer stores the uploaded image in uploads/products/.
-        // req.file.path contains the path of the uploaded image.
         if (!req.file) {
-            return res.status(400).json({
-                message: "Product image is required"
-            });
+            return res.status(400).json(
+                {
+                    message: "Product image is required"
+                }
+            );
         }
-
-        const product = await Product.create({
-            ...req.body,
-            image: req.file.path
-        });
-        // ===== MULTER / IMAGE UPLOAD REQUIREMENT END =====
-
+        const product = await Product.create(
+            {
+                ...req.body,
+                image: req.file.path
+            });
         res.status(201).json(
             {
                 message: "Product created Successfully!",
@@ -76,15 +70,9 @@ export async function getProduct(req, res) {
 
 export async function updateProduct(req, res) {
     try {
-
-        // ===== MULTER / IMAGE UPLOAD REQUIREMENT START =====
-        // Assignment Requirement:
-        // If a new image is uploaded, save its path in the Product document.
         if (req.file) {
             req.body.image = req.file.path;
         }
-        // ===== MULTER / IMAGE UPLOAD REQUIREMENT END =====
-
         const product = await Product.findByIdAndUpdate(
             req.params.id,
             req.body,

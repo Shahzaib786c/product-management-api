@@ -18,6 +18,7 @@ app.use("/api/categories", router)
 app.use("/api/products", productrouter)
 
 
+
 app.use((err, req, res, next) => {
     if (err instanceof multer.MulterError) {
         return res.status(400).json({

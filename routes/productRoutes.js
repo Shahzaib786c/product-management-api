@@ -6,9 +6,9 @@ const router = express.Router();
 
 router.post("/", upload.single("image"), createProduct)
 router.get("/", getProducts)
+router.get("/category/:category", getProductsByCategory)
 router.get("/:id", getProduct)
 router.put("/:id", upload.single("image"), updateProduct)
 router.delete("/:id", deleteProduct)
-router.get("/category/:category", getProductsByCategory)
 
 export default router;
