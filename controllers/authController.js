@@ -23,7 +23,6 @@ export async function register(req, res) {
         }
 
         const hashPassword = await bcrypt.hash(password, 12);
-        // console.log(hashPassword)
         const user = await userModel.create({
             name,
             email,
@@ -48,18 +47,15 @@ export async function login(req, res) {
         if (!email || !password) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        // 1. find the user
         const user = await userModel.findOne({ email });
         if (!userModel) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
-        // 2. check the password
         const isMatch = await bcrypt.compare(password, user.password);
         // console.log(isMatch)
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
-        // 3. create the token
         const token = jwt.sign(
             { id: user._id },
             process.env.JWT_SECRET,
